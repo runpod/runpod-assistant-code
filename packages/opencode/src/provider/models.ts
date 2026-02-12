@@ -100,6 +100,10 @@ export namespace ModelsDev {
 
   export async function get() {
     const result = await Data()
+    if (!result["runpod"]) {
+      const { RunPod } = await import("./runpod")
+      result["runpod"] = RunPod.provider()
+    }
     return result as Record<string, Provider>
   }
 
