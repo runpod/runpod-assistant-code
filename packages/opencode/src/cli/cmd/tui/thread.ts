@@ -10,6 +10,7 @@ import { withNetworkOptions, resolveNetworkOptions } from "@/cli/network"
 import type { Event } from "@opencode-ai/sdk/v2"
 import type { EventSource } from "./context/sdk"
 import { win32DisableProcessedInput, win32InstallCtrlCGuard } from "./win32"
+import { Auth } from "@/auth"
 
 declare global {
   const OPENCODE_WORKER_PATH: string
@@ -90,6 +91,20 @@ export const TuiThreadCommand = cmd({
         UI.error("--fork requires --continue or --session")
         process.exitCode = 1
         return
+      }
+
+      // Auto-trigger Runpod setup if no API key is configured
+      const hasRunpodKey = process.env.RUNPOD_API_KEY || (await Auth.get("runpod"))
+      if (!hasRunpodKey) {
+        const { RunpodSetupCommand } = await import("@/cli/cmd/runpod")
+        await (RunpodSetupCommand as any).handler({})
+        // Re-check after setup
+        const keyNow = process.env.RUNPOD_API_KEY || (await Auth.get("runpod"))
+        if (!keyNow) {
+          UI.error("Runpod API key is required. Run `opencode runpod setup` to configure.")
+          process.exitCode = 1
+          return
+        }
       }
 
       // Resolve relative paths against PWD to preserve behavior when using --cwd flag

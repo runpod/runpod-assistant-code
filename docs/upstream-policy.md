@@ -16,6 +16,7 @@ This repository is a fork of [OpenCode](https://github.com/opencode-ai/opencode)
 |------|--------|--------|
 | `packages/opencode/src/provider/models.ts` | Inject Runpod provider in `get()` | Single integration point for the model database |
 | `packages/opencode/src/index.ts` | Register `RunpodCommand` | CLI command registration requires the yargs chain |
+| `packages/opencode/src/cli/cmd/tui/thread.ts` | Auto-trigger Runpod setup on first launch | Onboarding must happen before TUI starts |
 
 ## Merge Strategy
 
