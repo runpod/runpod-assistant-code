@@ -62,6 +62,7 @@ export const RunpodSetupCommand = cmd({
         UI.empty()
         const logo = loadLogo()
         if (logo) UI.println(PURPLE + logo + RESET)
+        UI.empty()
         prompts.intro(`${PURPLE_BOLD}RUNPOD ASSISTANT FIRST-TIME SETUP${RESET}`)
 
         prompts.log.info(
