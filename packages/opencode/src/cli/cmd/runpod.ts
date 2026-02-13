@@ -151,7 +151,12 @@ export const RunpodSetupCommand = cmd({
             `Account         ${user.email}`,
         )
 
-        prompts.outro(`Settings updated. ${PURPLE_BOLD}You're ready to start building!${RESET}`)
+        const ready = await prompts.confirm({
+          message: `${PURPLE_BOLD}Ready to start building?${RESET}`,
+        })
+        if (prompts.isCancel(ready) || !ready) throw new UI.CancelledError()
+
+        prompts.outro(`${PURPLE_BOLD}Let's go!${RESET}`)
       },
     })
   },

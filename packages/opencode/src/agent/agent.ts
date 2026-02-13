@@ -77,6 +77,7 @@ export namespace Agent {
       build: {
         name: "build",
         description: "The default agent. Executes tools based on configured permissions.",
+        color: "#af5fff",
         options: {},
         permission: PermissionNext.merge(
           defaults,
