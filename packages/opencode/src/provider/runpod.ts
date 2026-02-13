@@ -4,11 +4,11 @@ export namespace RunPod {
   // Each tier maps to a Runpod public serverless endpoint.
   // Add more tiers here as endpoints become available.
   const TIERS = {
-    "qwen3-32b": {
-      endpointId: "qwen3-32b-awq",
-      modelId: "Qwen/Qwen3-32B-AWQ",
-      name: "Qwen 3 32B",
-      context: 131072,
+    "glm-4.7-flash": {
+      endpointId: "tmirn00irdwrp9",
+      modelId: "glm-4.7-flash",
+      name: "GLM 4.7 Flash",
+      context: 202752,
       output: 8192,
       cost: { input: 0.5, output: 0.5 },
     },
@@ -76,7 +76,7 @@ export namespace RunPod {
         name: tier.name,
         release_date: "2025-01-01",
         attachment: false,
-        reasoning: tier.modelId.toLowerCase().includes("qwen"),
+        reasoning: tier.modelId.toLowerCase().includes("qwen") || tier.modelId.toLowerCase().includes("glm"),
         temperature: true,
         tool_call: true,
         cost: {
