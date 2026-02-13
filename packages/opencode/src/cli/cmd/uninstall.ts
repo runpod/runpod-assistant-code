@@ -52,7 +52,7 @@ export const UninstallCommand = {
 
   handler: async (args: UninstallArgs) => {
     UI.empty()
-    UI.println(UI.logo("  "))
+    UI.println(UI.cliLogo("  "))
     UI.empty()
     prompts.intro("Uninstall OpenCode")
 

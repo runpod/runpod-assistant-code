@@ -76,7 +76,7 @@ const cli = yargs(hideBin(process.argv))
       args: process.argv.slice(2),
     })
   })
-  .usage("\n" + UI.logo())
+  .usage("\n" + UI.cliLogo())
   .completion("completion", "generate shell completion script")
   .command(AcpCommand)
   .command(McpCommand)
