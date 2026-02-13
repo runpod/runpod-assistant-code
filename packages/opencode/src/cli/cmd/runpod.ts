@@ -110,7 +110,11 @@ export const RunpodSetupCommand = cmd({
         if (tierEntries.length === 1) {
           const [name, tier] = tierEntries[0]
           selectedTier = name
-          prompts.log.info(`Using ${PURPLE_BOLD}${tier.name}${RESET} (${tier.modelId})`)
+          prompts.log.info(
+            `Model           ${PURPLE_BOLD}${tier.name}${RESET} (${tier.modelId})\n` +
+              `Context         ${(tier.context / 1024).toFixed(0)}k tokens\n` +
+              `Cost            $${tier.cost.input}/M input, $${tier.cost.output}/M output`,
+          )
         } else {
           const tier = await prompts.select({
             message: "Select a default model",
@@ -123,6 +127,12 @@ export const RunpodSetupCommand = cmd({
           if (prompts.isCancel(tier)) throw new UI.CancelledError()
           selectedTier = tier
         }
+
+        // Confirm before applying
+        const confirm = await prompts.confirm({
+          message: `Set ${PURPLE_BOLD}runpod/${selectedTier}${RESET} as default model?`,
+        })
+        if (prompts.isCancel(confirm) || !confirm) throw new UI.CancelledError()
 
         const defaultModel = `runpod/${selectedTier}`
         try {

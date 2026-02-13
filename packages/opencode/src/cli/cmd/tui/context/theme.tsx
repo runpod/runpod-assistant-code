@@ -465,7 +465,7 @@ function generateSystem(colors: TerminalColors, mode: "dark" | "light"): ThemeJs
     theme: {
       // Primary colors using ANSI
       primary: ansiColors.cyan,
-      secondary: ansiColors.magenta,
+      secondary: RGBA.fromInts(175, 95, 255), // Runpod purple
       accent: ansiColors.cyan,
 
       // Status colors using ANSI
