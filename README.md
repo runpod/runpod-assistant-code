@@ -1,3 +1,80 @@
+# RunPod Assistant
+
+An AI coding assistant powered by RunPod serverless inference, built on [OpenCode](https://opencode.ai).
+
+**Default model:** GLM 4.7 Flash via RunPod serverless endpoint.
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- [Bun](https://bun.sh) 1.3+
+- A RunPod API key (get one at [runpod.io](https://runpod.io))
+
+### 1. Clone and install
+
+```bash
+git clone <repo-url>
+cd runpod-assistant-code
+git checkout main
+bun install
+```
+
+> **Important:** All current changes are on the `main` branch.
+
+### 2. Set your API key
+
+Export your RunPod API key as an environment variable:
+
+```bash
+export RUNPOD_API_KEY="your-api-key-here"
+```
+
+Add this to your shell profile (`~/.bashrc`, `~/.zshrc`, etc.) so it persists across sessions.
+
+### 3. Run the assistant
+
+```bash
+bun dev
+```
+
+This starts the TUI. On first launch, you will be guided through the setup flow to configure your model and credentials.
+
+To run against a specific directory:
+
+```bash
+bun dev /path/to/your/project
+```
+
+### Clearing stale config
+
+If you previously ran the assistant on a different branch (e.g. `dev`) or with a different model, **you must remove cached config files** before running again. Otherwise the old model selection will persist.
+
+```bash
+# Remove global config (contains saved model selection)
+rm -f ~/.config/opencode/config.json
+
+# Remove saved auth credentials (if you want to re-enter your API key)
+rm -f ~/.local/share/opencode/auth.json
+```
+
+After removing these files, restart the assistant with `bun dev` and go through setup again.
+
+### Troubleshooting
+
+| Problem | Solution |
+|---------|----------|
+| Still seeing old model (e.g. Qwen) | Remove `~/.config/opencode/config.json` and restart |
+| Never prompted for setup | If `RUNPOD_API_KEY` env var is set, setup is skipped (the key is used directly). Remove the env var to trigger setup, or just use the env var approach. |
+| Model returns errors after branch switch | Remove both config files listed above and restart |
+| 500 errors from endpoint | The endpoint has a ~30-40s cold start. Wait and retry. |
+
+---
+
+## Original OpenCode README
+
 <p align="center">
   <a href="https://opencode.ai">
     <picture>
